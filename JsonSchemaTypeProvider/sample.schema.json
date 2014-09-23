@@ -1,0 +1,240 @@
+﻿{
+    "title": "Order",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "placedOn": {
+            "type": "string"
+        },
+        "buyer": {
+            "$ref": "#/definitions/buyer"
+        },
+        "shippingTo": {
+            "$ref": "#/definitions/shippingAddress"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/item"
+            }
+        },
+        "shipments": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/shipment"
+            }
+        },
+        "metadata": {
+            "$ref": "#/definitions/metadata"
+        }
+    },
+    "definitions": {
+        "buyer": {
+            "title": "Buyer",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
+                    "type": "string"
+                }
+            }
+        },
+        "address": {
+            "title": "Address",
+            "type": "object",
+            "properties": {
+                "address1": {
+                    "type": "string"
+                },
+                "address2": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "zipCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "shippingAddress": {
+            "title": "Shipping Address",
+            "type": "object",
+            "allof": [
+                {
+                    "$ref": "#/definitions/buyer"
+                },
+                {
+                    "$ref": "#/definitions/address"
+                }
+            ]
+        },
+        "item": {
+            "title": "Item",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "sellerSku": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "taxCode": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "fees": {
+                    "type": "number"
+                },
+                "feeAdjustments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/feeAdjustment"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "shipment": {
+            "title": "shipment",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "fulfillmentCenter": {
+                    "$ref": "#/definitions/fulfillmentCenter"
+                },
+                "method": {
+                    "$ref": "#/definitions/shippingMethod"
+                },
+                "shipBy": {
+                    "type": "string"
+                },
+                "deliveryBy": {
+                    "type": "string"
+                },
+                "box": {
+                    "$ref": "#/definitions/shippingBox"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/shippingItem"
+                    }
+                },
+                "labelUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "feeAdjustment": {
+            "title": "FeeAdjustment",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "reason": {
+                    "type": "string"
+                }
+            }
+        },
+        "shippingBox": {
+            "title": "ShippingBox",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "length": {
+                    "type": "number"
+                },
+                "maxWeight": {
+                    "type": "number"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "fulfillmentCenter": {
+            "title": "FulfillmentCenter",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "shippingMethod": {
+            "type": "string"
+        },
+        "shippingItem": {
+            "title": "ShippingItem",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "sellerSku": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            }
+        },
+        "metadata": {
+            "title": "Metadata",
+            "type": "object",
+            "properties": {
+                "notifiedOn": {
+                    "type": "string"
+                },
+                "state": {
+                    "title": "State",
+                    "type": "object"
+                },
+                "history": {
+                    "type": "array"
+                }
+            }
+        }
+    }
+}

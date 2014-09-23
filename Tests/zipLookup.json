@@ -1,0 +1,10 @@
+﻿{
+  "title": "ZipLookup",
+  "type": "object", 
+  "properties": {
+    "status" :  { "type":  "string", "required" :  true },
+    "message" :  {"type":  "string"},
+    "city": { "type":  "string" }, 
+    "state": { "type":  "string" }
+   }  
+}

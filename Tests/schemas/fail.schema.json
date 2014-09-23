@@ -1,0 +1,11 @@
+﻿{
+  "title": "Failure",
+  "type": "object", 
+  "properties": {
+    "message": { "type":  "string" }, 
+    "data": {
+        "title" :  "Data",
+        "type" :  "object"
+    }
+  }
+}

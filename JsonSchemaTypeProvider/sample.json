@@ -1,0 +1,21 @@
+﻿{
+    "newId": "76",
+    "items": [
+        {
+            "id": "8f5ae15b6b414b00a1b9d6ad99166a00",
+            "newId": "76-i105"
+        }
+    ],
+    "shipments": [
+        {
+            "id": "a172ae641c384c57b3a5b58ae4dd3bd6",
+            "newId": "76-s2507",
+            "items": [
+                {
+                    "id": "9af824b9e4a24854991870db184bbe32",
+                    "newId": "76-s2507-i105"
+                }
+            ]
+        }
+    ]
+}

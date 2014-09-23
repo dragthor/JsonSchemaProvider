@@ -1,0 +1,27 @@
+﻿{
+  "title": "Activation",
+  "type": "object", 
+  "properties" : {
+    "activation_code": { "type":  "string", "required" :  true}, 
+    "password": { "type":  "string", "required" :  true }, 
+    "email": { "type":  "string", "required" :  true}, 
+    "address" :  {  "$ref" :  "#/definitions/address", "required" :  true },
+    "legal_name": { "type":  "string", "required" :  true },
+    "display_name": { "type":  "string", "required" :  true }
+  },
+  "definitions" :  {
+      "address" :  {
+          "title": "Address",
+          "type": "object", 
+          "properties": {
+            "line1": { "type":  "string", "required" :  true }, 
+            "line2": { "type":  "string", "required" :  true }, 
+            "city": { "type":  "string", "required" :  true }, 
+            "state": { "type":  "string", "required" :  true }, 
+            "zip_code": { "type":  "string", "required" :  true }, 
+            "phone": { "type":  "string", "required" :  true },
+            "phone_ext": { "type":  "string", "required" :  true }
+          }
+        }
+    }
+}
