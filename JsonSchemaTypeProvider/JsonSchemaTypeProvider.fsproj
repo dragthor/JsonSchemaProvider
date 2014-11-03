@@ -57,14 +57,12 @@
     <Compile Include="ProvidedTypes-head.fs" />
     <Compile Include="DirectoryLocalSchemaResolver.fs" />
     <Compile Include="JsonSchemaTypeProvider.fs" />
-    <None Include="Script.fsx" />
     <None Include="sample.schema.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="JsonSchemaTypeProvider.nuspec" />
     <None Include="sample.json" />
-    <None Include="nuget.cmd" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion>11.0</VisualStudioVersion>
