@@ -143,7 +143,10 @@ type JsonSchemaTypeProvider(config: TypeProviderConfig) as this =
         else
         [
             for KeyValue(key,value) in jsonSchema.Properties do
-                let propertyType = this.ResolveType (value, generatedTypes)
+                let propertyType = 
+                    match this.ResolveType (value, generatedTypes) with
+                    | Choice1Of2 t -> t
+                    | Choice2Of2 e -> failwithf "Error: Cant' figure out type of %A in schema %A" key jsonSchema
                 let field = ProvidedField("_" + key, propertyType)
                 yield upcast field
                 let property = ProvidedProperty(key, propertyType, [])
@@ -151,29 +154,31 @@ type JsonSchemaTypeProvider(config: TypeProviderConfig) as this =
                 property.SetterCode <- fun args -> Expr.FieldSet(args.[0], field, args.[1])
                 yield upcast property
         ]
-
+   
     member internal this.ResolveType (value, generatedTypes) =
-        if not <| value.Type.HasValue then failwithf "Invalid schema: JsonSchemaType cannot be null : %A" value
-        let typ = 
+        if not <| value.Type.HasValue then 
+            sprintf "Invalid schema: JsonSchemaType cannot be null : %A" value |> Choice2Of2 
+        else
             match value.Type.Value with
-            | JsonSchemaType.String -> typeof<string>
-            | JsonSchemaType.Integer -> typeof<int>
-            | JsonSchemaType.Boolean -> typeof<bool>
-            | JsonSchemaType.Float -> typeof<decimal>
+            | JsonSchemaType.String -> Choice1Of2 typeof<string>
+            | JsonSchemaType.Integer -> Choice1Of2 typeof<int>
+            | JsonSchemaType.Boolean -> Choice1Of2 typeof<bool>
+            | JsonSchemaType.Float -> Choice1Of2 typeof<decimal>
             | JsonSchemaType.Any 
             | JsonSchemaType.None 
-            | JsonSchemaType.Null -> typeof<obj>
-            | JsonSchemaType.Object -> this.CreateTypeFromSchema (value, generatedTypes)
+            | JsonSchemaType.Null -> Choice1Of2 typeof<obj>
+            | JsonSchemaType.Object -> this.CreateTypeFromSchema (value, generatedTypes) |> Choice1Of2
             | JsonSchemaType.Array -> 
-                if value.Items = null then typeof<obj []>
+                if value.Items = null then Choice1Of2 typeof<obj []>
                 else
                     if value.Items.Count <> 1 
-                    then failwithf "Exactly one type definition per array is expected, recieved: %A" value.Items
-                    let firstType = value.Items.[0]
-                    let itemType = this.ResolveType (firstType, generatedTypes)
-                    itemType.MakeArrayType()
+                    then sprintf "Exactly one type definition per array is expected, recieved: %A" value.Items |> Choice2Of2
+                    else
+                        let firstType = value.Items.[0]
+                        match this.ResolveType (firstType, generatedTypes) with
+                        | Choice1Of2 itemType -> itemType.MakeArrayType() |> Choice1Of2
+                        | x -> x
             | _ -> failwithf "Unsupported JsonSchemaType value: %A" (value.Type.Value)
-        typ
 //        if value.Required.HasValue && value.Required.Value = true
 //        then typ
 //        else typedefof<_ option>.MakeGenericType(typ)

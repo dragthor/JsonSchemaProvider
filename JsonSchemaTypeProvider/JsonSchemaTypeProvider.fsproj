@@ -64,6 +64,7 @@
     <None Include="packages.config" />
     <None Include="JsonSchemaTypeProvider.nuspec" />
     <None Include="sample.json" />
+    <None Include="nuget.cmd" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion>11.0</VisualStudioVersion>
